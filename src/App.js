@@ -1,8 +1,15 @@
 import React from "react"
-import {Link} from "react-router-dom"
+import Footer from "./components/Footer/Footer"
+import Navbar from "./components/Navbar/Navbar";
+
 function App() {
-  return (       
-        <p> react</p>
+  return (     
+    <div className="container">
+      <h1>UdeSA Movies</h1>
+      <Navbar />
+      <p> react</p>
+      <Footer />
+    </div>
   );
 }
 
