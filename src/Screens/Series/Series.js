@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import MovieCard from "../../components/MovieCard/MovieCard";
+import FilterForm from "../../components/FilterForm/FilterForm";
+import MovieList from "../../components/MovieList/MovieList";
 import "./Series.css";
 
 class Series extends Component {
@@ -58,30 +59,16 @@ class Series extends Component {
       <main className="series">
         <h2 className="series-title">Peliculas en cartelera</h2>
 
-        <form className="series-form">
-          <input
-            className="series-input"
-            type="text"
-            value={this.state.filtro}
-            onChange={(event) => this.controlarInput(event)}
-            placeholder="Filtrar peliculas"
-          />
-        </form>
+        <FilterForm
+          value={this.state.filtro}
+          onChange={(event) => this.controlarInput(event)}
+          placeholder="Filtrar peliculas"
+        />
 
         {this.state.loading ? (
           <p>Cargando...</p>
         ) : (
-          <div className="series-grid">
-            {peliculasFiltradas.map((pelicula) => (
-              <MovieCard
-                key={pelicula.id}
-                id={pelicula.id}
-                title={pelicula.title}
-                overview={pelicula.overview}
-                poster_path={pelicula.poster_path}
-              />
-            ))}
-          </div>
+          <MovieList className="series-grid" peliculas={peliculasFiltradas} />
         )}
       </main>
     );

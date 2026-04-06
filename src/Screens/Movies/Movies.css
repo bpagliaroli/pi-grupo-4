@@ -6,17 +6,6 @@
   margin-bottom: 24px;
 }
 
-.movies-form {
-  margin-bottom: 24px;
-}
-
-.movies-input {
-  width: 260px;
-  padding: 10px 12px;
-  border: 1px solid #cccccc;
-  border-radius: 6px;
-}
-
 .movies-grid {
   display: flex;
   flex-wrap: wrap;

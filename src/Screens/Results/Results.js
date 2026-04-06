@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import MovieCard from "../../components/MovieCard/MovieCard";
+import MovieList from "../../components/MovieList/MovieList";
 import "./Results.css";
 
 class Results extends Component {
@@ -12,16 +12,19 @@ class Results extends Component {
   }
 
   componentDidMount() {
+    // Cuando entra por primera vez a la pantalla, busca las peliculas.
     this.buscarPeliculas();
   }
 
   componentDidUpdate(prevProps) {
+    // Si cambia lo escrito en la URL, vuelve a hacer la busqueda.
     if (prevProps.match.params.busqueda !== this.props.match.params.busqueda) {
       this.buscarPeliculas();
     }
   }
 
   buscarPeliculas() {
+    // React Router guarda la palabra buscada dentro de match.params.
     let query = this.props.match.params.busqueda;
 
     if (!query) {
@@ -34,6 +37,7 @@ class Results extends Component {
 
     this.setState({ loading: true });
 
+    // Este fetch usa la palabra buscada para traer resultados de TMDB.
     fetch(
       "https://api.themoviedb.org/3/search/movie?api_key=e1f309add4d1c8549507f20f59ad035e&query=" +
         query
@@ -61,17 +65,7 @@ class Results extends Component {
         ) : this.state.resultados.length === 0 ? (
           <p>No se encontraron peliculas para esa busqueda.</p>
         ) : (
-          <div className="results-grid">
-            {this.state.resultados.map((pelicula) => (
-              <MovieCard
-                key={pelicula.id}
-                id={pelicula.id}
-                title={pelicula.title}
-                overview={pelicula.overview}
-                poster_path={pelicula.poster_path}
-              />
-            ))}
-          </div>
+          <MovieList className="results-grid" peliculas={this.state.resultados} />
         )}
       </main>
     );

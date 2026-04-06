@@ -1,0 +1,10 @@
+.filter-form {
+  margin-bottom: 24px;
+}
+
+.filter-form-input {
+  width: 260px;
+  padding: 10px 12px;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+}
