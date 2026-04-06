@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import MovieCard from "../../components/MovieCard/MovieCard";
+import SearchForm from "../../components/SearchForm/SearchForm";
 import "./Home.css";
 
 class Home extends Component {
@@ -72,16 +73,12 @@ class Home extends Component {
     return (
       <main className="home">
         <h2 className="home-title">Buscador</h2>
-        <form className="home-search" onSubmit={(event) => this.evitarSubmit(event)}>
-          <input
-            className="home-search-input"
-            type="text"
-            placeholder="Buscar..."
-            value={this.state.valor}
-            onChange={(event) => this.controlarCambios(event)}
-          />
-          <button className="home-search-button" type="submit">Buscar</button>
-        </form>
+        <SearchForm
+          placeholder="Buscar..."
+          value={this.state.valor}
+          onChange={(event) => this.controlarCambios(event)}
+          onSubmit={(event) => this.evitarSubmit(event)}
+        />
 
         {mostrandoCarga ? (
           <p className="home-loading">Cargando...</p>

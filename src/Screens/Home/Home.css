@@ -6,26 +6,6 @@
   margin-bottom: 16px;
 }
 
-.home-search {
-  display: flex;
-  margin-bottom: 32px;
-}
-
-.home-search-input {
-  width: 260px;
-  padding: 10px 12px;
-  border: 1px solid #cccccc;
-  border-radius: 6px;
-}
-
-.home-search-button {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 6px;
-  background-color: #1f2937;
-  color: white;
-}
-
 .home-loading {
   font-size: 18px;
 }

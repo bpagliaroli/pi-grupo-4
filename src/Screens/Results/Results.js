@@ -56,17 +56,22 @@ class Results extends Component {
   }
 
   render() {
+    let contenido;
+
+    if (this.state.loading) {
+      contenido = <p>Cargando...</p>;
+    } else if (this.state.resultados.length === 0) {
+      contenido = <p>No se encontraron peliculas para esa busqueda.</p>;
+    } else {
+      contenido = (
+        <MovieList className="results-grid" peliculas={this.state.resultados} />
+      );
+    }
+
     return (
       <main className="results">
         <h2 className="results-title">Resultados de busqueda</h2>
-
-        {this.state.loading ? (
-          <p>Cargando...</p>
-        ) : this.state.resultados.length === 0 ? (
-          <p>No se encontraron peliculas para esa busqueda.</p>
-        ) : (
-          <MovieList className="results-grid" peliculas={this.state.resultados} />
-        )}
+        {contenido}
       </main>
     );
   }
