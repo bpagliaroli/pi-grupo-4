@@ -90,7 +90,7 @@ class Home extends Component {
             <section className="home-section">
               <div className="home-section-header">
                 <h2 className="home-section-title">Peliculas populares</h2>
-                <Link className="home-section-link" to="/movies/popular">
+                <Link className="home-section-link" to="/movies">
                   Ver todas
                 </Link>
               </div>
@@ -112,7 +112,7 @@ class Home extends Component {
             <section className="home-section">
               <div className="home-section-header">
                 <h2 className="home-section-title">Peliculas en cartelera</h2>
-                <Link className="home-section-link" to="/movies/now-playing">
+                <Link className="home-section-link" to="/series">
                   Ver todas
                 </Link>
               </div>

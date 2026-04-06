@@ -7,6 +7,7 @@ class Movies extends Component {
     super(props);
     this.state = {
       peliculas: [],
+      filtro: "",
       loading: true
     };
   }
@@ -15,21 +16,18 @@ class Movies extends Component {
     this.traerPeliculas();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.match.params.category !== this.props.match.params.category) {
-      this.traerPeliculas();
-    }
+  controlarInput(event) {
+    this.setState({
+      filtro: event.target.value
+    });
   }
 
   traerPeliculas() {
-    const category = this.props.match.params.category;
-    const endpoint = category === "now-playing" ? "now_playing" : "popular";
-
     this.setState({ loading: true });
 
     fetch(
       "https://api.themoviedb.org/3/movie/" +
-        endpoint +
+        "popular" +
         "?api_key=e1f309add4d1c8549507f20f59ad035e"
     )
       .then((response) => response.json())
@@ -46,19 +44,37 @@ class Movies extends Component {
   }
 
   render() {
-    const category = this.props.match.params.category;
-    const titulo =
-      category === "now-playing" ? "Peliculas en cartelera" : "Peliculas populares";
+    const peliculasFiltradas = this.state.peliculas.filter((pelicula) => {
+      if (this.state.filtro === "") {
+        return true;
+      }
+
+      if (pelicula.title.toLowerCase() === this.state.filtro.toLowerCase()) {
+        return true;
+      }
+
+      return false;
+    });
 
     return (
       <main className="movies">
-        <h2 className="movies-title">{titulo}</h2>
+        <h2 className="movies-title">Peliculas populares</h2>
+
+        <form className="movies-form">
+          <input
+            className="movies-input"
+            type="text"
+            value={this.state.filtro}
+            onChange={(event) => this.controlarInput(event)}
+            placeholder="Filtrar peliculas"
+          />
+        </form>
 
         {this.state.loading ? (
           <p>Cargando...</p>
         ) : (
           <div className="movies-grid">
-            {this.state.peliculas.map((pelicula) => (
+            {peliculasFiltradas.map((pelicula) => (
               <MovieCard
                 key={pelicula.id}
                 id={pelicula.id}

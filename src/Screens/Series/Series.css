@@ -1,0 +1,23 @@
+.series {
+  padding: 24px;
+}
+
+.series-title {
+  margin-bottom: 24px;
+}
+
+.series-form {
+  margin-bottom: 24px;
+}
+
+.series-input {
+  width: 260px;
+  padding: 10px 12px;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+}
+
+.series-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
