@@ -1,0 +1,12 @@
+.results {
+  padding: 24px;
+}
+
+.results-title {
+  margin-bottom: 24px;
+}
+
+.results-grid {
+  display: flex;
+  flex-wrap: wrap;
+}

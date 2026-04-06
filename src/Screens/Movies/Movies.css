@@ -1,0 +1,12 @@
+.movies {
+  padding: 24px;
+}
+
+.movies-title {
+  margin-bottom: 24px;
+}
+
+.movies-grid {
+  display: flex;
+  flex-wrap: wrap;
+}

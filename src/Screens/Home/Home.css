@@ -1,0 +1,57 @@
+.home {
+  padding: 24px;
+}
+
+.home-title {
+  margin-bottom: 16px;
+}
+
+.home-search {
+  display: flex;
+  margin-bottom: 32px;
+}
+
+.home-search-input {
+  width: 260px;
+  padding: 10px 12px;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+}
+
+.home-search-button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #1f2937;
+  color: white;
+}
+
+.home-loading {
+  font-size: 18px;
+}
+
+.home-section {
+  margin-bottom: 40px;
+}
+
+.home-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.home-section-title {
+  margin-bottom: 0;
+}
+
+.home-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.home-section-link {
+  color: #1d4ed8;
+  text-decoration: none;
+  font-weight: 600;
+}

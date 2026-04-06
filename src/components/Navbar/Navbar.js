@@ -1,6 +1,7 @@
 import React from "react";
 import Navelement from "../Navelement/Navelement";
 import "./Navbar.css";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function Navbar() {
     
@@ -12,10 +13,10 @@ function Navbar() {
                 <Navelement to="/series" opcion="Series"/>
                 <Navelement to="/favorites" opcion="Favoritas"/>
                 <li className="nav-item ml-auto">
-                    <a className="nav-link" href="/register">Registro</a>
+                    <Link className="nav-link" to="/register">Registro</Link>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="/login">Login</a>
+                    <Link className="nav-link" to="/login">Login</Link>
                 </li>
             </ul>
         </nav>

@@ -1,0 +1,23 @@
+.detail {
+  padding: 24px;
+}
+
+.detail-title {
+  margin-bottom: 24px;
+}
+
+.detail-content {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.detail-image {
+  width: 280px;
+  border-radius: 8px;
+}
+
+.detail-info {
+  max-width: 600px;
+  line-height: 1.6;
+}
