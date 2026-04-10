@@ -4,16 +4,16 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "", //capturar lo que escribe el usuario en el input --> estado
+      email: "", 
       password: "",
       error: ""
     };
   }
 
-  enviarFormulario(e) { //se ejecuta cuando el usuario manda el formulario
-    e.preventDefault(); // evita que la página se recargue al tocar el botón submit
+  enviarFormulario(e) { 
+    e.preventDefault(); 
 
-    let usuarios = localStorage.getItem("usuarios"); //se guardan los usuarios que se guardaron desde CrearCuenta
+    let usuarios = localStorage.getItem("usuarios"); 
 
     if (usuarios === null) {
       return this.setState({
@@ -26,22 +26,22 @@ class Login extends Component {
     let usuarioEncontrado = null;
 
     for (let i = 0; i < usuarios.length; i++) {
-      if (usuarios[i].email === this.state.email) { //compara el que escribió la persona con los que estaban guardados
-        usuarioEncontrado = usuarios[i]; // si lo encuentra se guarda en usuarioEncontrado
+      if (usuarios[i].email === this.state.email) { 
+        usuarioEncontrado = usuarios[i]; 
       }
     }
 
     if (
       usuarioEncontrado &&
-      usuarioEncontrado.password === this.state.password //que exista ese mail y que la contraseña coincida con la guardada
+      usuarioEncontrado.password === this.state.password 
     ) {
-      // guardar sesión
+      
       localStorage.setItem(
         "usuarioLogueado",
         JSON.stringify(usuarioEncontrado)
       );
 
-      // redirigir al home
+      
       this.props.history.push("/");
     } else {
       this.setState({

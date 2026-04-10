@@ -10,3 +10,17 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.series-empty {
+  margin: 24px 0;
+}
+
+.series-load-more {
+  margin-top: 24px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  background-color: #1f2937;
+  color: #fff;
+  cursor: pointer;
+}

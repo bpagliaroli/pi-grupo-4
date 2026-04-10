@@ -4,12 +4,12 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",    //capturar lo que escribe el usuario en el input --> estado
+      email: "",    
       password: "",
       error: ""
     };
   }
-  // que no se envíe el formulario
+
   enviarFormulario(event) {
     event.preventDefault();
 
@@ -21,14 +21,13 @@ class Register extends Component {
     usuarios = JSON.parse(usuarios);
     }
 
-    // para la validación de la contraseña
+
     if (this.state.password.length < 6) {
       return this.setState({
         error: "La contraseña debe tener mínimo 6 caracteres"
       });
     }
 
-    // validación del email repetido
     let existe = false;
 
     for (let i = 0; i < usuarios.length; i++) {
@@ -42,7 +41,6 @@ class Register extends Component {
       });
     }
 
-    // crear usuario
     let nuevoUsuario = {
       email: this.state.email,
       password: this.state.password
@@ -52,7 +50,6 @@ class Register extends Component {
 
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
-    // aca se limpia el form
     this.setState({
       email: "",
       password: "",

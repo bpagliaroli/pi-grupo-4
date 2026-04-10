@@ -12,19 +12,19 @@ class Results extends Component {
   }
 
   componentDidMount() {
-    // Cuando entra por primera vez a la pantalla, busca las peliculas.
+    // Cuando entra por primera vez a la pantalla, busca las peliculas
     this.buscarPeliculas();
   }
 
   componentDidUpdate(prevProps) {
-    // Si cambia lo escrito en la URL, vuelve a hacer la busqueda.
+    // Si cambia lo escrito en la URL, vuelve a hacer la busqueda
     if (prevProps.match.params.busqueda !== this.props.match.params.busqueda) {
       this.buscarPeliculas();
     }
   }
 
   buscarPeliculas() {
-    // React Router guarda la palabra buscada dentro de match.params.
+    // React Router guarda la palabra buscada dentro de match.params
     let query = this.props.match.params.busqueda;
 
     if (!query) {
@@ -56,22 +56,28 @@ class Results extends Component {
   }
 
   render() {
-    let contenido;
-
     if (this.state.loading) {
-      contenido = <p>Cargando...</p>;
-    } else if (this.state.resultados.length === 0) {
-      contenido = <p>No se encontraron peliculas para esa busqueda.</p>;
-    } else {
-      contenido = (
-        <MovieList className="results-grid" peliculas={this.state.resultados} />
+      return (
+        <main className="results">
+          <h2 className="results-title">Resultados de busqueda</h2>
+          <p>Cargando...</p>
+        </main>
+      );
+    }
+
+    if (this.state.resultados.length === 0) {
+      return (
+        <main className="results">
+          <h2 className="results-title">Resultados de busqueda</h2>
+          <p>No se encontraron peliculas para esa busqueda.</p>
+        </main>
       );
     }
 
     return (
       <main className="results">
         <h2 className="results-title">Resultados de busqueda</h2>
-        {contenido}
+        <MovieList className="results-grid" peliculas={this.state.resultados} />
       </main>
     );
   }

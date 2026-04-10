@@ -6,7 +6,21 @@
   margin-bottom: 24px;
 }
 
-.movies-grid {
+.moviesLista {
   display: flex;
   flex-wrap: wrap;
+}
+
+.moviesVacio {
+  margin: 24px 0;
+}
+
+.moviesCargarMas {
+  margin-top: 24px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  background-color: #1f2937;
+  color: #fff;
+  cursor: pointer;
 }

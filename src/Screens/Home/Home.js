@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import SearchForm from "../../components/SearchForm/SearchForm";
 import "./Home.css";
@@ -9,7 +9,6 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      valor: "",
       populares: [],
       enCartelera: [],
       loadingPopulares: true,
@@ -49,18 +48,6 @@ class Home extends Component {
       });
   }
 
-  controlarCambios(event) {
-    this.setState({
-      valor: event.target.value
-    });
-  }
-
-  evitarSubmit(event) {
-    event.preventDefault();
-
-    this.props.history.push("/results/" + this.state.valor);
-  }
-
   render() {
     let mostrandoCarga = false;
 
@@ -73,12 +60,7 @@ class Home extends Component {
     return (
       <main className="home">
         <h2 className="home-title">Buscador</h2>
-        <SearchForm
-          placeholder="Buscar..."
-          value={this.state.valor}
-          onChange={(event) => this.controlarCambios(event)}
-          onSubmit={(event) => this.evitarSubmit(event)}
-        />
+        <SearchForm />
 
         {mostrandoCarga ? (
           <p className="home-loading">Cargando...</p>
@@ -134,4 +116,4 @@ class Home extends Component {
   }
 }
 
-export default withRouter(Home);
+export default Home;
