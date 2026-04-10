@@ -35,7 +35,10 @@ class Results extends Component {
       return;
     }
 
-    this.setState({ loading: true });
+    this.setState({
+      resultados: [],
+      loading: true
+    });
 
     // Este fetch usa la palabra buscada para traer resultados de TMDB.
     fetch(
