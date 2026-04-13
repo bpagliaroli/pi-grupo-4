@@ -67,7 +67,7 @@ class Login extends Component {
 
         <button type="submit">Ingresar</button>
 
-        {this.state.error !== "" && <p>{this.state.error}</p>}
+        {this.state.error !== "" ? <p>{this.state.error}</p> : null}
       </form>
     );
   }
