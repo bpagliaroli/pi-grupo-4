@@ -42,7 +42,14 @@ class Detail extends Component {
         this.setState({ loading: false });
       });
   }
-
+    agregarFavorito() {
+        let storage = localStorage.getItem('favoritos');
+        let favs = storage ? JSON.parse(storage) : [];
+        
+        favs.push(this.state.pelicula.id);
+        localStorage.setItem('favoritos', JSON.stringify(favs));
+        alert("Película agregada a favoritos");
+    }
   render() {
     if (this.state.loading) {
       return (
@@ -51,6 +58,7 @@ class Detail extends Component {
         </main>
       );
     }
+   
 
     if (!this.state.pelicula) {
       return (
@@ -90,11 +98,17 @@ class Detail extends Component {
             <p>Duracion: {this.state.pelicula.runtime} minutos</p>
             <p><strong>Géneros:</strong> {this.state.pelicula.genres ? this.state.pelicula.genres.map(g => g.name).join(", ") : 'Cargando...'}</p>
             <p><strong>Sinopsis:</strong> {this.state.pelicula.overview}</p>
+            {localStorage.getItem("usuarioLogueado") && (
+              <button onClick={() => this.agregarFavorito()}>
+                Agregar a favoritos
+               </button>
+            )}
 
           </div>
-        </div>
+          
+      </div> 
       </main>
-    );
+          );
   }
 }
 
