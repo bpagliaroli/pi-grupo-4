@@ -88,6 +88,9 @@ class Detail extends Component {
             <p>Fecha de estreno: {this.state.pelicula.release_date}</p>
             <p>Calificacion: {this.state.pelicula.vote_average}</p>
             <p>Duracion: {this.state.pelicula.runtime} minutos</p>
+            <p><strong>Géneros:</strong> {this.state.pelicula.genres ? this.state.pelicula.genres.map(g => g.name).join(", ") : 'Cargando...'}</p>
+            <p><strong>Sinopsis:</strong> {this.state.pelicula.overview}</p>
+
           </div>
         </div>
       </main>
