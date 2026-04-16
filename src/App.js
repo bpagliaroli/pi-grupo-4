@@ -10,6 +10,7 @@ import Register from "./Screens/Register/Register";
 import Login from "./Screens/Login/Login";
 import Results from "./Screens/Results/Results";
 import NotFound from "./Screens/NotFound/NotFound";
+import Favoritos from "./Screens/Favoritos/Favoritos";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
         <Route path="/results/:busqueda" component={Results} />
+        <Route path="/favoritos" component={Favoritos} />
         <Route component={NotFound} />
       </Switch>
       <Footer />
