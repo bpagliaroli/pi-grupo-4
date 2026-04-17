@@ -1,40 +1,40 @@
 nav {
-    display: grid;
-    grid-template-columns: 1fr;
-    background-color: #eee;
-    border-radius: 4px;
-    margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  background-color: #172033;
+  border: 1px solid #2f3e5c;
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
 
 .nav {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    border-bottom: 1px solid #ddd;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .nav-item {
-    list-style: none;
-    display: inline-block;
+  list-style: none;
+  display: inline-block;
 }
 
 .nav-link {
-    color: #444;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: block;
-    border-bottom: 3px solid transparent;
-    transition: all 0.3s ease;
+  color: #e2e8f0;
+  text-decoration: none;
+  padding: 10px 15px;
+  display: block;
+  border-bottom: 3px solid transparent;
 }
 
 .nav-link:hover {
-    font-weight: bold;
-    border-bottom: 3px solid #007bff;
+  color: #38bdf8;
+  border-bottom: 3px solid #38bdf8;
+  background-color: #1f2a40;
 }
 
 .nav-item.ml-auto {
-    margin-left: auto;
+  margin-left: auto;
 }

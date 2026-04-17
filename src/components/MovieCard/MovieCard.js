@@ -1,13 +1,89 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
 import "./MovieCard.css";
+
+const cookies = new Cookies();
 
 class MovieCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mostrarDescripcion: false
+      mostrarDescripcion: false,
+      esFavorito: false,
+      usuarioLogueado: false
     };
+  }
+
+  componentDidMount() {
+    // Verificar si usuario está logueado
+    const usuario = cookies.get("user-auth-cookie");
+    if (usuario) {
+      this.setState({ usuarioLogueado: true });
+      // Verificar si la película está en favoritos
+      this.verificarFavorito();
+    }
+  }
+
+  verificarFavorito() {
+    let favoritos = localStorage.getItem("favoritos");
+    if (favoritos) {
+      favoritos = JSON.parse(favoritos);
+      
+      // Buscar si esta película está en favoritos
+      let existe = false;
+      for (let i = 0; i < favoritos.length; i++) {
+        if (favoritos[i].id === this.props.id) {
+          existe = true;
+        }
+      }
+      
+      this.setState({ esFavorito: existe });
+    }
+  }
+
+  agregarQuitarFavorito() {
+    let favoritos = localStorage.getItem("favoritos");
+    
+    if (!favoritos) {
+      favoritos = [];
+    } else {
+      favoritos = JSON.parse(favoritos);
+    }
+
+    // Buscar si la película ya está en favoritos
+    let yaEstaEnFavoritos = false;
+    
+    for (let i = 0; i < favoritos.length; i++) {
+      if (favoritos[i].id === this.props.id) {
+        yaEstaEnFavoritos = true;
+      }
+    }
+
+    if (yaEstaEnFavoritos) {
+      // Quitar de favoritos
+      // Crear un nuevo array SIN la película que queremos eliminar
+      let nuevosFavoritos = [];
+      for (let i = 0; i < favoritos.length; i++) {
+        if (favoritos[i].id !== this.props.id) {
+          nuevosFavoritos.push(favoritos[i]);
+        }
+      }
+      favoritos = nuevosFavoritos;
+      this.setState({ esFavorito: false });
+    } else {
+      // Agregar a favoritos
+      const peliculaFavorita = {
+        id: this.props.id,
+        title: this.props.title,
+        poster_path: this.props.poster_path,
+        overview: this.props.overview
+      };
+      favoritos.push(peliculaFavorita);
+      this.setState({ esFavorito: true });
+    }
+
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
   }
 
   mostrarOcultarDescripcion() {
@@ -46,6 +122,18 @@ class MovieCard extends Component {
         <Link className="movie-card-link" to={"/detail/" + this.props.id}>
           Ir a detalle
         </Link>
+
+        {/* Botón de favoritos - Solo si está logueado */}
+        {this.state.usuarioLogueado && (
+          <button
+            className="favorito-button"
+            type="button"
+            onClick={() => this.agregarQuitarFavorito()}
+            title={this.state.esFavorito ? "Quitar de favoritos" : "Agregar a favoritos"}
+          >
+            {this.state.esFavorito ? "❤" : "♡"}
+          </button>
+        )}
       </article>
     );
   }

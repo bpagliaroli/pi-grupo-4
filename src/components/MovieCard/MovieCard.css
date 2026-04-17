@@ -1,9 +1,9 @@
 .movie-card {
   width: 220px;
   padding: 16px;
-  border: 1px solid #dddddd;
+  border: 1px solid #2f3e5c;
   border-radius: 8px;
-  background-color: #f8f8f8;
+  background-color: #172033;
   display: flex;
   flex-direction: column;
   margin-right: 16px;
@@ -23,15 +23,17 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: #e5e5e5;
+  background-color: #1f2a40;
   border-radius: 6px;
   padding: 12px;
+  color: #94a3b8;
 }
 
 .movie-card-title {
   margin-top: 12px;
   margin-bottom: 10px;
   font-size: 18px;
+  color: #e2e8f0;
 }
 
 .movie-card-text {
@@ -44,16 +46,20 @@
 .movie-card-button {
   margin-top: 12px;
   padding: 10px 14px;
+}
+
+.favorito-button {
+  background-color: transparent;
   border: none;
-  border-radius: 6px;
-  background-color: #2563eb;
-  color: white;
+  font-size: 28px;
   cursor: pointer;
+  padding: 10px;
+  margin-top: 10px;
 }
 
 .movie-card-link {
   margin-top: 10px;
-  color: #1d4ed8;
+  color: #38bdf8;
   text-decoration: none;
   font-weight: 600;
 }
