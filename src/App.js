@@ -17,7 +17,6 @@ function App() {
   return (
     <div className="container">
       <h1>UdeSA Movies</h1>
-      <Navbar />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/movies" component={Movies} />

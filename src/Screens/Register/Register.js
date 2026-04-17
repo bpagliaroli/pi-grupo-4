@@ -1,4 +1,5 @@
 import { Component } from "react";
+import Navbar from "../../components/Navbar/Navbar";
 
 class Register extends Component {
   constructor(props) {
@@ -78,7 +79,9 @@ class Register extends Component {
 
   render() {
     return (
-      <form onSubmit={(event) => this.enviarFormulario(event)}>
+      <main>
+        <Navbar />
+        <form onSubmit={(event) => this.enviarFormulario(event)}>
         
         <input
           type="email"
@@ -98,6 +101,7 @@ class Register extends Component {
 
         {this.state.error !== "" && <p>{this.state.error}</p>}
       </form>
+      </main>
     );
   }
 }

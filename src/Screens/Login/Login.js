@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
+import Navbar from "../../components/Navbar/Navbar";
 
 const cookies = new Cookies();
 
@@ -82,7 +83,9 @@ class Login extends Component {
 
   render() {
     return (
-      <form onSubmit={(e) => this.enviarFormulario(e)}>
+      <main>
+        <Navbar />
+        <form onSubmit={(e) => this.enviarFormulario(e)}>
         <input
           type="email"
           placeholder="Email"
@@ -101,6 +104,7 @@ class Login extends Component {
 
         {this.state.error !== "" && <p>{this.state.error}</p>}
       </form>
+      </main>
     );
   }
 }

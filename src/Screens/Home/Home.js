@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import SearchForm from "../../components/SearchForm/SearchForm";
 import "./Home.css";
+import Navbar from "../../components/Navbar/Navbar";
 
 class Home extends Component {
 
@@ -58,7 +59,9 @@ class Home extends Component {
     }
 
     return (
+      
       <main className="home">
+        <Navbar />
         <h2 className="home-title">Buscador</h2>
         <SearchForm />
 
@@ -116,6 +119,7 @@ class Home extends Component {
           </>
         )}
       </main>
+     
     );
   }
 }

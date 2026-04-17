@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Navbar from "../../components/Navbar/Navbar";
 import "./Detail.css";
 
 class Detail extends Component {
@@ -62,6 +63,7 @@ class Detail extends Component {
     if (this.state.loading) {
       return (
         <main className="detail">
+          <Navbar />
           <p>Cargando...</p>
         </main>
       );
@@ -79,6 +81,7 @@ class Detail extends Component {
     if (this.state.pelicula.success === false) {
       return (
         <main className="detail">
+          <Navbar />
           <p>No se encontro la pelicula.</p>
         </main>
       );
@@ -86,6 +89,7 @@ class Detail extends Component {
 
     return (
       <main className="detail">
+        <Navbar />
         <h2 className="detail-title">{this.state.pelicula.title}</h2>
 
         <div className="detail-content">

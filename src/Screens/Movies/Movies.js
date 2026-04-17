@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import MovieList from "../../components/MovieList/MovieList";
+import Navbar from "../../components/Navbar/Navbar";
 import "./Movies.css";
 
 class Movies extends Component {
@@ -119,6 +120,7 @@ class Movies extends Component {
 
     return (
       <main className="movies">
+        <Navbar />
         <h2 className="movies-title">Peliculas populares</h2>
 
         <form onSubmit={(event) => this.evitarSubmit(event)}>

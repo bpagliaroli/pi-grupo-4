@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import MovieList from "../../components/MovieList/MovieList";
+import Navbar from "../../components/Navbar/Navbar";
 import "./Series.css";
 
 class Series extends Component {
@@ -117,6 +118,7 @@ class Series extends Component {
 
     return (
       <main className="series">
+        <Navbar />
         <h2 className="series-title">Peliculas en cartelera</h2>
 
         <form onSubmit={(event) => this.evitarSubmit(event)}>

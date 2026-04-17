@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import MovieList from "../../components/MovieList/MovieList";
+import Navbar from "../../components/Navbar/Navbar";
 import "./Results.css";
 
 class Results extends Component {
@@ -67,6 +68,7 @@ class Results extends Component {
     if (this.state.loading) {
       return (
         <main className="results">
+          <Navbar />
           <h2 className="results-title">Resultados de busqueda</h2>
           <p>Cargando...</p>
         </main>
@@ -76,6 +78,7 @@ class Results extends Component {
     if (this.state.resultados.length === 0) {
       return (
         <main className="results">
+          <Navbar />
           <h2 className="results-title">Resultados de busqueda</h2>
           <p>No se encontraron peliculas para esa busqueda.</p>
         </main>
@@ -84,6 +87,7 @@ class Results extends Component {
 
     return (
       <main className="results">
+        <Navbar />
         <h2 className="results-title">Resultados de busqueda</h2>
         <MovieList className="results-grid" peliculas={this.state.resultados} />
       </main>
