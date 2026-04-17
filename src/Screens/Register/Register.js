@@ -59,7 +59,7 @@ class Register extends Component {
       error: ""
     });
 
-    alert("¡Cuenta creada con éxito!");
+    this.props.history.push("/login");
   }
 
   controlarEmail(event) {
