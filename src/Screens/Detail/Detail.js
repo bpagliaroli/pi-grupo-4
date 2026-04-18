@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import Cookies from "universal-cookie";
 import "./Detail.css";
+
+const cookies = new Cookies();
 
 class Detail extends Component {
   constructor(props) {
@@ -43,6 +46,10 @@ class Detail extends Component {
       });
   }
     agregarFavorito() {
+        if (!cookies.get("user-auth-cookie")) {
+            return;
+        }
+
         let storage = localStorage.getItem('favoritos');
         let favs = storage ? JSON.parse(storage) : [];
         
@@ -56,9 +63,11 @@ class Detail extends Component {
         
         favs.push(peliculaFavorita);
         localStorage.setItem('favoritos', JSON.stringify(favs));
-        alert("Película agregada a favoritos");
+        alert("Agregaste la Peli a favoritos");
     }
   render() {
+    const usuarioLogueado = cookies.get("user-auth-cookie");
+
     if (this.state.loading) {
       return (
         <main className="detail">
@@ -106,7 +115,7 @@ class Detail extends Component {
             <p>Duracion: {this.state.pelicula.runtime} minutos</p>
             <p><strong>Géneros:</strong> {this.state.pelicula.genres ? this.state.pelicula.genres.map(g => g.name).join(", ") : 'Cargando...'}</p>
             <p><strong>Sinopsis:</strong> {this.state.pelicula.overview}</p>
-            {localStorage.getItem("usuarioLogueado") ? (
+            {usuarioLogueado ? (
               <button onClick={() => this.agregarFavorito()}>
                 Agregar a favoritos
               </button>

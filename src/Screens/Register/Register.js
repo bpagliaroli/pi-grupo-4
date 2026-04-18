@@ -13,17 +13,15 @@ class Register extends Component {
   enviarFormulario(event) {
     event.preventDefault();
 
-    let usuarios = localStorage.getItem("usuarios");
-
-    if (usuarios === null) {
-    usuarios = [];
-    } else {
-    usuarios = JSON.parse(usuarios);
-    }
-
-    // Convertir email a minúsculas
     const email = this.state.email.toLowerCase();
     const password = this.state.password;
+    let usuarios = localStorage.getItem("usuarios");
+
+    if (usuarios) {
+      usuarios = JSON.parse(usuarios);
+    } else {
+      usuarios = [];
+    }
 
     if (password.length < 6) {
       return this.setState({
@@ -31,20 +29,15 @@ class Register extends Component {
       });
     }
 
-    let existe = false;
-
     for (let i = 0; i < usuarios.length; i++) {
-    if (usuarios[i].email.toLowerCase() === email) {
-        existe = true;
-    }
-    }
-    if (existe) {
-      return this.setState({
-        error: "El email ya está registrado"
-      });
+      if (usuarios[i].email.toLowerCase() === email) {
+        return this.setState({
+          error: "El email ya está registrado"
+        });
+      }
     }
 
-    let nuevoUsuario = {
+    const nuevoUsuario = {
       email: email,
       password: password
     };
@@ -79,7 +72,6 @@ class Register extends Component {
   render() {
     return (
       <form onSubmit={(event) => this.enviarFormulario(event)}>
-        
         <input
           type="email"
           placeholder="Email"
@@ -96,7 +88,7 @@ class Register extends Component {
 
         <button type="submit">Crear cuenta</button>
 
-        {this.state.error !== "" && <p>{this.state.error}</p>}
+        <p>{this.state.error !== "" ? this.state.error : ""}</p>
       </form>
     );
   }
