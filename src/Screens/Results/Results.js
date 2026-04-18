@@ -67,7 +67,7 @@ class Results extends Component {
     if (this.state.loading) {
       return (
         <main className="results">
-          <h2 className="results-title">Resultados de busqueda</h2>
+          <h2 className="resultsTitu">Resultados de busqueda</h2>
           <p>Cargando...</p>
         </main>
       );
@@ -76,7 +76,7 @@ class Results extends Component {
     if (this.state.resultados.length === 0) {
       return (
         <main className="results">
-          <h2 className="results-title">Resultados de busqueda</h2>
+          <h2 className="resultsTitu">Resultados de busqueda</h2>
           <p>No se encontraron peliculas para esa busqueda.</p>
         </main>
       );
@@ -84,8 +84,8 @@ class Results extends Component {
 
     return (
       <main className="results">
-        <h2 className="results-title">Resultados de busqueda</h2>
-        <MovieList className="results-grid" peliculas={this.state.resultados} />
+        <h2 className="resultsTitu">Resultados de busqueda</h2>
+        <MovieList className="resultsVer" peliculas={this.state.resultados} />
       </main>
     );
   }

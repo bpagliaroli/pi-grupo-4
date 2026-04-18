@@ -9,6 +9,10 @@ body {
   color: #e2e8f0;
 }
 
+#root {
+  min-height: 100vh;
+}
+
 a {
   color: #38bdf8;
 }
@@ -17,6 +21,9 @@ a {
   max-width: 1180px;
   margin: 0 auto;
   padding: 24px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .container h1 {
@@ -44,4 +51,8 @@ button {
   background-color: #0ea5e9;
   color: #f8fafc;
   padding: 10px 14px;
+}
+
+.contenido-principal {
+  flex-grow: 1;
 }
