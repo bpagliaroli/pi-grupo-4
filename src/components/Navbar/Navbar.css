@@ -1,6 +1,4 @@
 nav {
-  display: grid;
-  grid-template-columns: 1fr;
   background-color: #172033;
   border: 1px solid #2f3e5c;
   border-radius: 8px;

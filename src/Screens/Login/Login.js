@@ -73,7 +73,8 @@ class Login extends Component {
       });
 
       this.props.history.push("/");
-    } else {
+    } 
+    else {
       this.setState({
         error: "Datos incorrectos"
       });
