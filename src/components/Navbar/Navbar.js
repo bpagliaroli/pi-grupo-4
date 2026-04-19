@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Cookies from "universal-cookie";
 import Navelement from "../Navelement/Navelement";
 import "./Navbar.css";
@@ -46,4 +46,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default withRouter(Navbar);
