@@ -16,62 +16,65 @@ class MovieCard extends Component {
   }
 
   componentDidMount() {
-    
     const usuario = cookies.get("user-auth-cookie");
+
     if (usuario) {
       this.setState({ usuarioLogueado: true });
-      
       this.verificarFavorito();
     }
   }
 
   verificarFavorito() {
     let favoritos = localStorage.getItem("favoritos");
+
     if (favoritos) {
       favoritos = JSON.parse(favoritos);
-      
-      
+
       let existe = false;
+
       for (let i = 0; i < favoritos.length; i++) {
-        if (String(favoritos[i].id) === String(this.props.id)) {
+        if (favoritos[i].id === this.props.id) {
           existe = true;
         }
       }
-      
+
       this.setState({ esFavorito: existe });
     }
   }
 
   agregarQuitarFavorito() {
+    if (!cookies.get("user-auth-cookie")) {
+      return;
+    }
+
     let favoritos = localStorage.getItem("favoritos");
-    
+
     if (!favoritos) {
       favoritos = [];
     } else {
       favoritos = JSON.parse(favoritos);
     }
 
-    // Buscar si la película ya está en favoritos
     let yaEstaEnFavoritos = false;
-    
+
     for (let i = 0; i < favoritos.length; i++) {
-      if (String(favoritos[i].id) === String(this.props.id)) {
+      if (favoritos[i].id === this.props.id) {
         yaEstaEnFavoritos = true;
       }
     }
 
     if (yaEstaEnFavoritos) {
-      
       let nuevosFavoritos = [];
+
       for (let i = 0; i < favoritos.length; i++) {
-        if (String(favoritos[i].id) !== String(this.props.id)) {
+        if (favoritos[i].id !== this.props.id) {
           nuevosFavoritos.push(favoritos[i]);
         }
       }
+
       favoritos = nuevosFavoritos;
       this.setState({ esFavorito: false });
     } else {
-      // Agregar a favoritos
       const peliculaFavorita = {
         id: this.props.id,
         title: this.props.title,
@@ -91,6 +94,36 @@ class MovieCard extends Component {
     });
   }
 
+  mostrarBotonFavoritos() {
+    if (this.state.usuarioLogueado === false) {
+      return null;
+    }
+
+    if (this.state.esFavorito) {
+      return (
+        <button
+          className="favorito-button"
+          type="button"
+          onClick={() => this.agregarQuitarFavorito()}
+          title="Quitar de favoritos"
+        >
+          ❤
+        </button>
+      );
+    }
+
+    return (
+      <button
+        className="favorito-button"
+        type="button"
+        onClick={() => this.agregarQuitarFavorito()}
+        title="Agregar a favoritos"
+      >
+        ♡
+      </button>
+    );
+  }
+
   render() {
     return (
       <article className="movie-card">
@@ -106,9 +139,9 @@ class MovieCard extends Component {
 
         <h3 className="movie-card-title">{this.props.title}</h3>
 
-        {this.state.mostrarDescripcion ? (
-          <p className="movie-card-text">{this.props.overview}</p>
-        ) : null}
+        <p className="movie-card-text">
+          {this.state.mostrarDescripcion ? this.props.overview : ""}
+        </p>
 
         <button
           className="movie-card-button"
@@ -122,17 +155,7 @@ class MovieCard extends Component {
           Ir a detalle
         </Link>
 
-        
-        {this.state.usuarioLogueado && (
-          <button
-            className="favorito-button"
-            type="button"
-            onClick={() => this.agregarQuitarFavorito()}
-            title={this.state.esFavorito ? "Quitar de favoritos" : "Agregar a favoritos"}
-          >
-            {this.state.esFavorito ? "❤" : "♡"}
-          </button>
-        )}
+        {this.mostrarBotonFavoritos()}
       </article>
     );
   }

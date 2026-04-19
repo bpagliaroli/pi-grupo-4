@@ -57,7 +57,7 @@ class Detail extends Component {
     let existe = false;
 
     for (let i = 0; i < favoritos.length; i++) {
-      if (String(favoritos[i].id) === String(this.state.pelicula.id)) {
+      if (favoritos[i].id === this.state.pelicula.id) {
         existe = true;
       }
     }
@@ -79,7 +79,7 @@ class Detail extends Component {
       let nuevosFavoritos = [];
 
       for (let i = 0; i < favoritos.length; i++) {
-        if (String(favoritos[i].id) !== String(this.state.pelicula.id)) {
+        if (favoritos[i].id !== this.state.pelicula.id) {
           nuevosFavoritos.push(favoritos[i]);
         }
       }
@@ -128,6 +128,60 @@ class Detail extends Component {
       );
     }
 
+    if (usuarioLogueado) {
+      return (
+        <main className="detail">
+          <h2 className="detail-title">{this.state.pelicula.title}</h2>
+
+          <div className="detail-content">
+            {this.state.pelicula.poster_path ? (
+              <img
+                className="detail-image"
+                src={"https://image.tmdb.org/t/p/w342" + this.state.pelicula.poster_path}
+                alt={this.state.pelicula.title}
+              />
+            ) : (
+              <p>Imagen no disponible</p>
+            )}
+
+            <div className="detail-info">
+              <p>Fecha de estreno: {this.state.pelicula.release_date}</p>
+              <p>Calificacion: {this.state.pelicula.vote_average}</p>
+              <p>Duracion: {this.state.pelicula.runtime} minutos</p>
+              <p><strong>Géneros:</strong></p>
+              {this.state.pelicula.genres ? (
+                <ul>
+                  {this.state.pelicula.genres.map((genero) => (
+                    <li key={genero.id}>{genero.name}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>Cargando...</p>
+              )}
+              <p><strong>Sinopsis:</strong> {this.state.pelicula.overview}</p>
+              {this.state.esFavorito ? (
+                <button
+                  className="detail-favorite-button is-favorite"
+                  type="button"
+                  onClick={() => this.agregarQuitarFavorito()}
+                >
+                  Quitar de favoritos
+                </button>
+              ) : (
+                <button
+                  className="detail-favorite-button"
+                  type="button"
+                  onClick={() => this.agregarQuitarFavorito()}
+                >
+                  Agregar a favoritos
+                </button>
+              )}
+            </div>
+          </div>
+        </main>
+      );
+    }
+
     return (
       <main className="detail">
         <h2 className="detail-title">{this.state.pelicula.title}</h2>
@@ -139,32 +193,29 @@ class Detail extends Component {
               src={"https://image.tmdb.org/t/p/w342" + this.state.pelicula.poster_path}
               alt={this.state.pelicula.title}
             />
+        ) : (
+          <p>Imagen no disponible</p>
+        )}
+
+        <div className="detail-info">
+          <p>Fecha de estreno: {this.state.pelicula.release_date}</p>
+          <p>Calificacion: {this.state.pelicula.vote_average}</p>
+          <p>Duracion: {this.state.pelicula.runtime} minutos</p>
+          <p><strong>Géneros:</strong></p>
+          {this.state.pelicula.genres ? (
+            <ul>
+              {this.state.pelicula.genres.map((genero) => (
+                <li key={genero.id}>{genero.name}</li>
+              ))}
+            </ul>
           ) : (
-            <p>Imagen no disponible</p>
+            <p>Cargando...</p>
           )}
-
-          <div className="detail-info">
-            <p>{this.state.pelicula.overview}</p>
-            <p>Fecha de estreno: {this.state.pelicula.release_date}</p>
-            <p>Calificacion: {this.state.pelicula.vote_average}</p>
-            <p>Duracion: {this.state.pelicula.runtime} minutos</p>
-            <p><strong>Géneros:</strong> {this.state.pelicula.genres ? this.state.pelicula.genres.map(g => g.name).join(", ") : 'Cargando...'}</p>
-            <p><strong>Sinopsis:</strong> {this.state.pelicula.overview}</p>
-            {usuarioLogueado ? (
-              <button
-                className={this.state.esFavorito ? "detail-favorite-button is-favorite" : "detail-favorite-button"}
-                type="button"
-                onClick={() => this.agregarQuitarFavorito()}
-              >
-                {this.state.esFavorito ? "Quitar de favoritos" : "Agregar a favoritos"}
-              </button>
-            ) : null}
-
-          </div>
-          
-      </div> 
+          <p><strong>Sinopsis:</strong> {this.state.pelicula.overview}</p>
+        </div>
+      </div>
       </main>
-          );
+    );
   }
 }
 

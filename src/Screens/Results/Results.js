@@ -17,18 +17,19 @@ class Results extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // Si cambia lo escrito en la URL, vuelve a hacer la busqueda
-    if (prevProps.match.params.busqueda !== this.props.match.params.busqueda) {
+    if (
+      prevProps.match.params.busqueda !== this.props.match.params.busqueda ||
+      prevProps.match.params.tipo !== this.props.match.params.tipo
+    ) {
       this.buscarPeliculas();
     }
   }
 
   buscarPeliculas() {
-    // React Router guarda la palabra buscada y el tipo
     let query = this.props.match.params.busqueda;
     let tipo = this.props.match.params.tipo;
+    let url = "";
 
-    // Si no hay tipo, usar populares por defecto
     if (!tipo) {
       tipo = "populares";
     }
@@ -46,14 +47,30 @@ class Results extends Component {
       loading: true
     });
 
-    // Buscar películas o series según el tipo elegido
-    fetch(
-      "https://api.themoviedb.org/3/search/movie?api_key=e1f309add4d1c8549507f20f59ad035e&query=" + query
-    )
+    if (tipo === "cartelera") {
+      url = "https://api.themoviedb.org/3/movie/now_playing?api_key=e1f309add4d1c8549507f20f59ad035e";
+    } else {
+      url = "https://api.themoviedb.org/3/movie/popular?api_key=e1f309add4d1c8549507f20f59ad035e";
+    }
+
+    fetch(url)
       .then((response) => response.json())
       .then((data) => {
+        let resultados = [];
+
+        if (data.results) {
+          for (let i = 0; i < data.results.length; i++) {
+            if (
+              data.results[i].title &&
+              data.results[i].title.toLowerCase().includes(query.toLowerCase())
+            ) {
+              resultados.push(data.results[i]);
+            }
+          }
+        }
+
         this.setState({
-          resultados: data.results ? data.results : [],
+          resultados: resultados,
           loading: false
         });
       })

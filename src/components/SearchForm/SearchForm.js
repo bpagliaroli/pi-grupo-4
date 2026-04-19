@@ -7,7 +7,7 @@ class SearchForm extends Component {
     super(props);
     this.state = {
       valor: "",
-      tipo: "movie" // movie = películas, tv = series
+      tipo: "populares"
     };
   }
 
@@ -19,7 +19,7 @@ class SearchForm extends Component {
 
   enviarFormulario(event) {
     event.preventDefault();
-    // Pasar la búsqueda junto con el tipo (populares o cartelera)
+
     this.props.history.push("/results/" + this.state.valor + "/" + this.state.tipo);
   }
 
