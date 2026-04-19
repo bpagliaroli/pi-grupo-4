@@ -16,11 +16,11 @@ class MovieCard extends Component {
   }
 
   componentDidMount() {
-    // Verificar si usuario está logueado
+    
     const usuario = cookies.get("user-auth-cookie");
     if (usuario) {
       this.setState({ usuarioLogueado: true });
-      // Verificar si la película está en favoritos
+      
       this.verificarFavorito();
     }
   }
@@ -30,10 +30,10 @@ class MovieCard extends Component {
     if (favoritos) {
       favoritos = JSON.parse(favoritos);
       
-      // Buscar si esta película está en favoritos
+      
       let existe = false;
       for (let i = 0; i < favoritos.length; i++) {
-        if (favoritos[i].id === this.props.id) {
+        if (String(favoritos[i].id) === String(this.props.id)) {
           existe = true;
         }
       }
@@ -55,17 +55,16 @@ class MovieCard extends Component {
     let yaEstaEnFavoritos = false;
     
     for (let i = 0; i < favoritos.length; i++) {
-      if (favoritos[i].id === this.props.id) {
+      if (String(favoritos[i].id) === String(this.props.id)) {
         yaEstaEnFavoritos = true;
       }
     }
 
     if (yaEstaEnFavoritos) {
-      // Quitar de favoritos
-      // Crear un nuevo array SIN la película que queremos eliminar
+      
       let nuevosFavoritos = [];
       for (let i = 0; i < favoritos.length; i++) {
-        if (favoritos[i].id !== this.props.id) {
+        if (String(favoritos[i].id) !== String(this.props.id)) {
           nuevosFavoritos.push(favoritos[i]);
         }
       }
@@ -123,7 +122,7 @@ class MovieCard extends Component {
           Ir a detalle
         </Link>
 
-        {/* Botón de favoritos - Solo si está logueado */}
+        
         {this.state.usuarioLogueado && (
           <button
             className="favorito-button"

@@ -9,7 +9,8 @@ class Detail extends Component {
     super(props);
     this.state = {
       pelicula: null,
-      loading: true
+      loading: true,
+      esFavorito: false
     };
   }
   
@@ -38,33 +39,67 @@ class Detail extends Component {
         this.setState({
           pelicula: data,
           loading: false
-        });
+        }, () => this.verificarFavorito());
       })
       .catch((error) => {
         console.log(error);
         this.setState({ loading: false });
       });
   }
-    agregarFavorito() {
-        if (!cookies.get("user-auth-cookie")) {
-            return;
-        }
 
-        let storage = localStorage.getItem('favoritos');
-        let favs = storage ? JSON.parse(storage) : [];
-        
-        // Guardar la película COMPLETA, no solo el ID
-        const peliculaFavorita = {
-            id: this.state.pelicula.id,
-            title: this.state.pelicula.title,
-            poster_path: this.state.pelicula.poster_path,
-            overview: this.state.pelicula.overview
-        };
-        
-        favs.push(peliculaFavorita);
-        localStorage.setItem('favoritos', JSON.stringify(favs));
-        alert("Agregaste la Peli a favoritos");
+  verificarFavorito() {
+    if (!this.state.pelicula) {
+      return;
     }
+
+    let storage = localStorage.getItem("favoritos");
+    let favoritos = storage ? JSON.parse(storage) : [];
+    let existe = false;
+
+    for (let i = 0; i < favoritos.length; i++) {
+      if (String(favoritos[i].id) === String(this.state.pelicula.id)) {
+        existe = true;
+      }
+    }
+
+    this.setState({
+      esFavorito: existe
+    });
+  }
+
+  agregarQuitarFavorito() {
+    if (!cookies.get("user-auth-cookie")) {
+      return;
+    }
+
+    let storage = localStorage.getItem("favoritos");
+    let favoritos = storage ? JSON.parse(storage) : [];
+
+    if (this.state.esFavorito) {
+      let nuevosFavoritos = [];
+
+      for (let i = 0; i < favoritos.length; i++) {
+        if (String(favoritos[i].id) !== String(this.state.pelicula.id)) {
+          nuevosFavoritos.push(favoritos[i]);
+        }
+      }
+
+      localStorage.setItem("favoritos", JSON.stringify(nuevosFavoritos));
+      this.setState({ esFavorito: false });
+    } else {
+      const peliculaFavorita = {
+        id: this.state.pelicula.id,
+        title: this.state.pelicula.title,
+        poster_path: this.state.pelicula.poster_path,
+        overview: this.state.pelicula.overview
+      };
+
+      favoritos.push(peliculaFavorita);
+      localStorage.setItem("favoritos", JSON.stringify(favoritos));
+      this.setState({ esFavorito: true });
+    }
+  }
+
   render() {
     const usuarioLogueado = cookies.get("user-auth-cookie");
 
@@ -116,8 +151,12 @@ class Detail extends Component {
             <p><strong>Géneros:</strong> {this.state.pelicula.genres ? this.state.pelicula.genres.map(g => g.name).join(", ") : 'Cargando...'}</p>
             <p><strong>Sinopsis:</strong> {this.state.pelicula.overview}</p>
             {usuarioLogueado ? (
-              <button onClick={() => this.agregarFavorito()}>
-                Agregar a favoritos
+              <button
+                className={this.state.esFavorito ? "detail-favorite-button is-favorite" : "detail-favorite-button"}
+                type="button"
+                onClick={() => this.agregarQuitarFavorito()}
+              >
+                {this.state.esFavorito ? "Quitar de favoritos" : "Agregar a favoritos"}
               </button>
             ) : null}
 
