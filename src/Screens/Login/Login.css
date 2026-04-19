@@ -2,5 +2,72 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 65vh;
+  padding: 40px 16px;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 560px;
+  padding: 42px;
+  display: flex;
+  flex-direction: column;
+  background-color: #111827;
+  border: 1px solid #2f3e5c;
+  border-radius: 8px;
+  
+}
+
+.login-form h2 {
+  margin: 0 0 10px;
+  color: #38bdf8;
+  text-align: center;
+  font-size: 30px;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+}
+
+.login-form input:focus {
+  
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
+}
+
+.login-form button {
+  margin-top: 8px;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background-color: #0284c7;
+  border-color: #0284c7;
+}
+
+.login-form p {
+  min-height: 20px;
+  margin: 0;
+  color: #f87171;
+  text-align: center;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .login-container {
+    padding: 24px 12px;
+  }
+
+  .login-form {
+    padding: 28px 20px;
+  }
+
+  .login-form h2 {
+    font-size: 26px;
+  }
 }

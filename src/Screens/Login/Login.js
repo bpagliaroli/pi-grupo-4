@@ -85,7 +85,9 @@ class Login extends Component {
   render() {
     return (
       <div className="login-container">
-        <form onSubmit={(e) => this.enviarFormulario(e)}>
+        <form className="login-form" onSubmit={(e) => this.enviarFormulario(e)}>
+          <h2>Ingresar</h2>
+
           <input 
             type="email"
             placeholder="Email"
@@ -106,6 +108,6 @@ class Login extends Component {
         </form>
       </div>
     );
-}
+  }
 }
 export default Login ;
