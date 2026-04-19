@@ -1,4 +1,5 @@
 import { Component } from "react";
+import "./Register.css";
 
 class Register extends Component {
   constructor(props) {
@@ -71,25 +72,29 @@ class Register extends Component {
 
   render() {
     return (
-      <form onSubmit={(event) => this.enviarFormulario(event)}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={this.state.email}
-          onChange={(event) => this.controlarEmail(event)}
-        />
+      <div className="register-container">
+        <form className="register-form" onSubmit={(event) => this.enviarFormulario(event)}>
+          <h2>Crear cuenta</h2>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={this.state.password}
-          onChange={(event) => this.controlarPassword(event)}
-        />
+          <input
+            type="email"
+            placeholder="Email"
+            value={this.state.email}
+            onChange={(event) => this.controlarEmail(event)}
+          />
 
-        <button type="submit">Crear cuenta</button>
+          <input
+            type="password"
+            placeholder="Password"
+            value={this.state.password}
+            onChange={(event) => this.controlarPassword(event)}
+          />
 
-        <p>{this.state.error !== "" ? this.state.error : ""}</p>
-      </form>
+          <button type="submit">Crear cuenta</button>
+
+          <p>{this.state.error !== "" ? this.state.error : ""}</p>
+        </form>
+      </div>
     );
   }
 }

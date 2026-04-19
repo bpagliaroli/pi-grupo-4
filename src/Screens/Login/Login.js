@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
+import './Login.css';
 
 const cookies = new Cookies();
 
@@ -30,7 +31,7 @@ class Login extends Component {
   enviarFormulario(e) {
     e.preventDefault();
 
-    // Convertir email a minúsculas para comparación
+    
     const email = this.state.email.toLowerCase();
     const password = this.state.password;
 
@@ -83,27 +84,28 @@ class Login extends Component {
 
   render() {
     return (
-      <form onSubmit={(e) => this.enviarFormulario(e)}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={this.state.email}
-          onChange={(e) => this.controlarEmail(e)}
-        />
+      <div className="login-container">
+        <form onSubmit={(e) => this.enviarFormulario(e)}>
+          <input 
+            type="email"
+            placeholder="Email"
+            value={this.state.email}
+            onChange={(e) => this.controlarEmail(e)}
+          />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={this.state.password}
-          onChange={(e) => this.controlarPassword(e)}
-        />
+          <input 
+            type="password"
+            placeholder="Password"
+            value={this.state.password}
+            onChange={(e) => this.controlarPassword(e)}
+          />
 
-        <button type="submit">Ingresar</button>
+          <button type="submit">Ingresar</button>
 
-        <p>{this.state.error !== "" ? this.state.error : ""}</p>
-      </form>
+          <p>{this.state.error !== "" ? this.state.error : ""}</p>
+        </form>
+      </div>
     );
-  }
 }
-
-export default Login;
+}
+export default Login ;
