@@ -94,36 +94,6 @@ class MovieCard extends Component {
     });
   }
 
-  mostrarBotonFavoritos() {
-    if (this.state.usuarioLogueado === false) {
-      return null;
-    }
-
-    if (this.state.esFavorito) {
-      return (
-        <button
-          className="favorito-button"
-          type="button"
-          onClick={() => this.agregarQuitarFavorito()}
-          title="Quitar de favoritos"
-        >
-          ❤
-        </button>
-      );
-    }
-
-    return (
-      <button
-        className="favorito-button"
-        type="button"
-        onClick={() => this.agregarQuitarFavorito()}
-        title="Agregar a favoritos"
-      >
-        ♡
-      </button>
-    );
-  }
-
   render() {
     return (
       <article className="movie-card">
@@ -155,7 +125,18 @@ class MovieCard extends Component {
           Ir a detalle
         </Link>
 
-        {this.mostrarBotonFavoritos()}
+        {this.state.usuarioLogueado ? (
+          <button
+            className="favorito-button"
+            type="button"
+            onClick={() => this.agregarQuitarFavorito()}
+            title={
+              this.state.esFavorito ? "Quitar de favoritos" : "Agregar a favoritos"
+            }
+          >
+            {this.state.esFavorito ? "❤" : "♡"}
+          </button>
+        ) : null}
       </article>
     );
   }

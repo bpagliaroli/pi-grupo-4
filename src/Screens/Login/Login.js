@@ -57,8 +57,7 @@ class Login extends Component {
       usuarioEncontrado &&
       usuarioEncontrado.password === password
     ) {
-      localStorage.setItem(
-        "usuarioLogueado",
+      localStorage.setItem("usuarioLogueado",
         JSON.stringify(usuarioEncontrado)
       );
 
@@ -88,18 +87,11 @@ class Login extends Component {
         <form className="login-form" onSubmit={(e) => this.enviarFormulario(e)}>
           <h2>Ingresar</h2>
 
-          <input 
-            type="email"
-            placeholder="Email"
-            value={this.state.email}
-            onChange={(e) => this.controlarEmail(e)}
+          <input type="email" placeholder="Email" value={this.state.email} onChange={(e) => this.controlarEmail(e)}
           />
 
           <input 
-            type="password"
-            placeholder="Password"
-            value={this.state.password}
-            onChange={(e) => this.controlarPassword(e)}
+            type="password" placeholder="Password" value={this.state.password} onChange={(e) => this.controlarPassword(e)}
           />
 
           <button type="submit">Ingresar</button>

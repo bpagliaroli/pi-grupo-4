@@ -5,8 +5,8 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #0b1120;
-  color: #e2e8f0;
+  background-color: #f4f4f4;
+  color: #222;
 }
 
 #root {
@@ -14,7 +14,7 @@ body {
 }
 
 a {
-  color: #38bdf8;
+  color: #1d4ed8;
 }
 
 .container {
@@ -29,27 +29,25 @@ a {
 .container h1 {
   margin: 0 0 20px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #2f3e5c;
-  color: #38bdf8;
+  border-bottom: 1px solid #ccc;
+  color: #222;
 }
 
 p {
-  color: #94a3b8;
+  color: #444;
 }
 
 input {
-  background-color: #172033;
-  color: #e2e8f0;
-  border: 1px solid #2f3e5c;
-  border-radius: 6px;
+  background-color: #fff;
+  color: #222;
+  border: 1px solid #999;
   padding: 10px 12px;
 }
 
 button {
-  border: 1px solid #0ea5e9;
-  border-radius: 6px;
-  background-color: #0ea5e9;
-  color: #f8fafc;
+  border: 1px solid #999;
+  background-color: #e5e5e5;
+  color: #222;
   padding: 10px 14px;
 }
 
