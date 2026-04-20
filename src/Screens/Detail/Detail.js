@@ -159,23 +159,25 @@ class Detail extends Component {
                 <p>Cargando...</p>
               )}
               <p><strong>Sinopsis:</strong> {this.state.pelicula.overview}</p>
-              {this.state.esFavorito ? (
-                <button
-                  className="detail-favorite-button is-favorite"
-                  type="button"
-                  onClick={() => this.agregarQuitarFavorito()}
-                >
-                  Quitar de favoritos
-                </button>
-              ) : (
-                <button
-                  className="detail-favorite-button"
-                  type="button"
-                  onClick={() => this.agregarQuitarFavorito()}
-                >
-                  Agregar a favoritos
-                </button>
-              )}
+              {usuarioLogueado ? (
+                this.state.esFavorito ? (
+                  <button
+                    className="detail-favorite-button is-favorite"
+                    type="button"
+                    onClick={() => this.agregarQuitarFavorito()}
+                  >
+                    Quitar de favoritos
+                  </button>
+                ) : (
+                  <button
+                    className="detail-favorite-button"
+                    type="button"
+                    onClick={() => this.agregarQuitarFavorito()}
+                  >
+                    Agregar a favoritos
+                  </button>
+                )
+              ) : null}
             </div>
           </div>
         </main>
