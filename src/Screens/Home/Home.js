@@ -79,6 +79,7 @@ class Home extends Component {
                       title={pelicula.title}
                       overview={pelicula.overview}
                       poster_path={pelicula.poster_path}
+                      tipo="populares"
                     />
                   ) : null
                 )}
@@ -103,6 +104,7 @@ class Home extends Component {
                       title={pelicula.title}
                       overview={pelicula.overview}
                       poster_path={pelicula.poster_path}
+                      tipo="cartelera"
                     />
                   ) : null
                 )}

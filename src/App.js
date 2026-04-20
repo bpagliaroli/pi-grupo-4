@@ -10,8 +10,8 @@ import Register from "./Screens/Register/Register";
 import Login from "./Screens/Login/Login";
 import Results from "./Screens/Results/Results";
 import NotFound from "./Screens/NotFound/NotFound";
-import "./App.css";
 import Favoritos from "./Screens/Favoritos/Favoritos";
+
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/movies" component={Movies} />
-          <Route path="/detail/:id" component={Detail} />
+          <Route path="/detail/:tipo/:id" component={Detail} />
           <Route path="/series" component={Series} />
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />

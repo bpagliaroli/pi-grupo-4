@@ -17,10 +17,20 @@ class Results extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.match.params.busqueda !== this.props.match.params.busqueda ||
-      prevProps.match.params.tipo !== this.props.match.params.tipo
-    ) {
+    let cambioBusqueda = false;
+    let cambioTipo = false;
+
+    if (prevProps.match.params.busqueda !== this.props.match.params.busqueda) {
+      cambioBusqueda = true;
+    }
+
+    if (prevProps.match.params.tipo !== this.props.match.params.tipo) {
+      cambioTipo = true;
+    }
+
+    if (cambioBusqueda === true) {
+      this.buscarPeliculas();
+    } else if (cambioTipo === true) {
       this.buscarPeliculas();
     }
   }
@@ -102,7 +112,11 @@ class Results extends Component {
     return (
       <main className="results">
         <h2 className="resultsTitu">Resultados de busqueda</h2>
-        <MovieList className="resultsVer" peliculas={this.state.resultados} />
+        <MovieList
+          className="resultsVer"
+          peliculas={this.state.resultados}
+          tipo={this.props.match.params.tipo ? this.props.match.params.tipo : "populares"}
+        />
       </main>
     );
   }

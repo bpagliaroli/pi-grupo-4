@@ -19,9 +19,30 @@ class Detail extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.match.params.id !== this.props.match.params.id) {
+    if (
+      prevProps.match.params.id !== this.props.match.params.id ||
+      prevProps.match.params.tipo !== this.props.match.params.tipo
+    ) {
       this.traerDetalle();
     }
+  }
+
+  obtenerTipoActual() {
+    let tipo = this.props.match.params.tipo;
+
+    if (!tipo) {
+      tipo = "populares";
+    }
+
+    return tipo;
+  }
+
+  obtenerTextoTipo() {
+    if (this.obtenerTipoActual() === "cartelera") {
+      return "Película en cartelera";
+    }
+
+    return "Película popular";
   }
 
   traerDetalle() {
@@ -57,7 +78,10 @@ class Detail extends Component {
     let existe = false;
 
     for (let i = 0; i < favoritos.length; i++) {
-      if (favoritos[i].id === this.state.pelicula.id) {
+      if (
+        favoritos[i].id === this.state.pelicula.id &&
+        favoritos[i].tipo === this.obtenerTipoActual()
+      ) {
         existe = true;
       }
     }
@@ -79,7 +103,10 @@ class Detail extends Component {
       let nuevosFavoritos = [];
 
       for (let i = 0; i < favoritos.length; i++) {
-        if (favoritos[i].id !== this.state.pelicula.id) {
+        if (
+          favoritos[i].id !== this.state.pelicula.id ||
+          favoritos[i].tipo !== this.obtenerTipoActual()
+        ) {
           nuevosFavoritos.push(favoritos[i]);
         }
       }
@@ -91,7 +118,8 @@ class Detail extends Component {
         id: this.state.pelicula.id,
         title: this.state.pelicula.title,
         poster_path: this.state.pelicula.poster_path,
-        overview: this.state.pelicula.overview
+        overview: this.state.pelicula.overview,
+        tipo: this.obtenerTipoActual()
       };
 
       favoritos.push(peliculaFavorita);
@@ -132,6 +160,7 @@ class Detail extends Component {
       return (
         <main className="detail">
           <h2 className="detail-title">{this.state.pelicula.title}</h2>
+          <p>{this.obtenerTextoTipo()}</p>
 
           <div className="detail-content">
             {this.state.pelicula.poster_path ? (
@@ -187,6 +216,7 @@ class Detail extends Component {
     return (
       <main className="detail">
         <h2 className="detail-title">{this.state.pelicula.title}</h2>
+        <p>{this.obtenerTextoTipo()}</p>
 
         <div className="detail-content">
           {this.state.pelicula.poster_path ? (

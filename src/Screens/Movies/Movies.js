@@ -138,6 +138,7 @@ class Movies extends Component {
               <MovieList
                 className="moviesLista"
                 peliculas={this.state.peliculasFiltradas}
+                tipo="populares"
               />
             ) : (
               <p className="moviesVacio">No se encontraron peliculas.</p>

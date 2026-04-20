@@ -33,7 +33,10 @@ class MovieCard extends Component {
       let existe = false;
 
       for (let i = 0; i < favoritos.length; i++) {
-        if (favoritos[i].id === this.props.id) {
+        if (
+          favoritos[i].id === this.props.id &&
+          favoritos[i].tipo === this.props.tipo
+        ) {
           existe = true;
         }
       }
@@ -58,7 +61,10 @@ class MovieCard extends Component {
     let yaEstaEnFavoritos = false;
 
     for (let i = 0; i < favoritos.length; i++) {
-      if (favoritos[i].id === this.props.id) {
+      if (
+        favoritos[i].id === this.props.id &&
+        favoritos[i].tipo === this.props.tipo
+      ) {
         yaEstaEnFavoritos = true;
       }
     }
@@ -67,7 +73,10 @@ class MovieCard extends Component {
       let nuevosFavoritos = [];
 
       for (let i = 0; i < favoritos.length; i++) {
-        if (favoritos[i].id !== this.props.id) {
+        if (
+          favoritos[i].id !== this.props.id ||
+          favoritos[i].tipo !== this.props.tipo
+        ) {
           nuevosFavoritos.push(favoritos[i]);
         }
       }
@@ -79,7 +88,8 @@ class MovieCard extends Component {
         id: this.props.id,
         title: this.props.title,
         poster_path: this.props.poster_path,
-        overview: this.props.overview
+        overview: this.props.overview,
+        tipo: this.props.tipo
       };
       favoritos.push(peliculaFavorita);
       this.setState({ esFavorito: true });
@@ -121,7 +131,10 @@ class MovieCard extends Component {
           Ver descripcion
         </button>
 
-        <Link className="movie-card-link" to={"/detail/" + this.props.id}>
+        <Link
+          className="movie-card-link"
+          to={"/detail/" + this.props.tipo + "/" + this.props.id}
+        >
           Ir a detalle
         </Link>
 

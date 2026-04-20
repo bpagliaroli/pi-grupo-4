@@ -6,11 +6,12 @@ function MovieList(props) {
     <div className={props.className}>
       {props.peliculas.map((pelicula) => (
         <MovieCard
-          key={pelicula.id}
+          key={pelicula.id + "-" + (pelicula.tipo ? pelicula.tipo : props.tipo)}
           id={pelicula.id}
           title={pelicula.title}
           overview={pelicula.overview}
           poster_path={pelicula.poster_path}
+          tipo={pelicula.tipo ? pelicula.tipo : props.tipo}
         />
       ))}
     </div>
