@@ -12,7 +12,6 @@ class Results extends Component {
   }
 
   componentDidMount() {
-    // Cuando entra por primera vez a la pantalla, busca las peliculas
     this.buscarPeliculas();
   }
 

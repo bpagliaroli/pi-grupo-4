@@ -65,7 +65,6 @@ class Login extends Component {
         path: "/"
       });
 
-      // Limpiar formulario después de login exitoso
       this.setState({
         email: "",
         password: "",
