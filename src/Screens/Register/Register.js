@@ -44,13 +44,10 @@ function Register () {
 
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
-    this.setState({
-      email: "",
-      password: "",
-      error: ""
-    });
-
-    this.props.history.push("/login");
+    setemail("");
+    setpassword("");
+    seterror("");
+    props.history.push("/login");
   }
 
   function controlarEmail(event) {
@@ -77,20 +74,20 @@ function Register () {
           <input
             type="email"
             placeholder="Email"
-            value={this.state.email}
-            onChange={(event) => this.controlarEmail(event)}
+            value={email}
+            onChange={(event) => controlarEmail(event)}
           />
 
           <input
             type="password"
             placeholder="Password"
-            value={this.state.password}
-            onChange={(event) => this.controlarPassword(event)}
+            value={password}
+            onChange={(event) => controlarPassword(event)}
           />
 
           <button type="submit">Crear cuenta</button>
 
-          <p>{this.state.error !== "" ? this.state.error : ""}</p>
+          <p>{error !== "" ? error : ""}</p>
         </form>
       </div>
     );
