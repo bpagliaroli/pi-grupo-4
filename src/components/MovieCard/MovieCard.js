@@ -1,51 +1,43 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import "./MovieCard.css";
 
 const cookies = new Cookies();
 
-class MovieCard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      mostrarDescripcion: false,
-      esFavorito: false,
-      usuarioLogueado: false
-    };
-  }
+function MovieCard(props) {
+  const [mostrarDescripcion, setMostrarDescripcion] = useState(false);
+  const [esFavorito, setEsFavorito] = useState(false);
+  const [usuarioLogueado, setUsuarioLogueado] = useState(false);
 
-  componentDidMount() {
+  useEffect(() => {
+    function verificarFavorito() {
+      let favoritos = localStorage.getItem("favoritos");
+
+      if (favoritos) {
+        favoritos = JSON.parse(favoritos);
+
+        let existe = false;
+
+        for (let i = 0; i < favoritos.length; i++) {
+          if (favoritos[i].id === props.id && favoritos[i].tipo === props.tipo) {
+            existe = true;
+          }
+        }
+
+        setEsFavorito(existe);
+      }
+    }
+
     const usuario = cookies.get("user-auth-cookie");
 
     if (usuario) {
-      this.setState({ usuarioLogueado: true });
-      this.verificarFavorito();
+      setUsuarioLogueado(true);
+      verificarFavorito();
     }
-  }
+  }, [props.id, props.tipo]);
 
-  verificarFavorito() {
-    let favoritos = localStorage.getItem("favoritos");
-
-    if (favoritos) {
-      favoritos = JSON.parse(favoritos);
-
-      let existe = false;
-
-      for (let i = 0; i < favoritos.length; i++) {
-        if (
-          favoritos[i].id === this.props.id &&
-          favoritos[i].tipo === this.props.tipo
-        ) {
-          existe = true;
-        }
-      }
-
-      this.setState({ esFavorito: existe });
-    }
-  }
-
-  agregarQuitarFavorito() {
+  function agregarQuitarFavorito() {
     if (!cookies.get("user-auth-cookie")) {
       return;
     }
@@ -61,10 +53,7 @@ class MovieCard extends Component {
     let yaEstaEnFavoritos = false;
 
     for (let i = 0; i < favoritos.length; i++) {
-      if (
-        favoritos[i].id === this.props.id &&
-        favoritos[i].tipo === this.props.tipo
-      ) {
+      if (favoritos[i].id === props.id && favoritos[i].tipo === props.tipo) {
         yaEstaEnFavoritos = true;
       }
     }
@@ -73,86 +62,75 @@ class MovieCard extends Component {
       let nuevosFavoritos = [];
 
       for (let i = 0; i < favoritos.length; i++) {
-        if (
-          favoritos[i].id !== this.props.id ||
-          favoritos[i].tipo !== this.props.tipo
-        ) {
+        if (favoritos[i].id !== props.id || favoritos[i].tipo !== props.tipo) {
           nuevosFavoritos.push(favoritos[i]);
         }
       }
 
       favoritos = nuevosFavoritos;
-      this.setState({ esFavorito: false });
+      setEsFavorito(false);
     } else {
       const peliculaFavorita = {
-        id: this.props.id,
-        title: this.props.title,
-        poster_path: this.props.poster_path,
-        overview: this.props.overview,
-        tipo: this.props.tipo
+        id: props.id,
+        title: props.title,
+        poster_path: props.poster_path,
+        overview: props.overview,
+        tipo: props.tipo
       };
+
       favoritos.push(peliculaFavorita);
-      this.setState({ esFavorito: true });
+      setEsFavorito(true);
     }
 
     localStorage.setItem("favoritos", JSON.stringify(favoritos));
   }
 
-  mostrarOcultarDescripcion() {
-    this.setState({
-      mostrarDescripcion: !this.state.mostrarDescripcion
-    });
+  function mostrarOcultarDescripcion() {
+    setMostrarDescripcion(!mostrarDescripcion);
   }
 
-  render() {
-    return (
-      <article className="movie-card">
-        {this.props.poster_path ? (
-          <img
-            className="movie-card-image"
-            src={"https://image.tmdb.org/t/p/w342" + this.props.poster_path}
-            alt={this.props.title}
-          />
-        ) : (
-          <p className="movie-card-empty">Imagen no disponible</p>
-        )}
+  return (
+    <article className="movie-card">
+      {props.poster_path ? (
+        <img
+          className="movie-card-image"
+          src={"https://image.tmdb.org/t/p/w342" + props.poster_path}
+          alt={props.title}
+        />
+      ) : (
+        <p className="movie-card-empty">Imagen no disponible</p>
+      )}
 
-        <h3 className="movie-card-title">{this.props.title}</h3>
+      <h3 className="movie-card-title">{props.title}</h3>
 
-        <p className="movie-card-text">
-          {this.state.mostrarDescripcion ? this.props.overview : ""}
-        </p>
+      <p className="movie-card-text">
+        {mostrarDescripcion ? props.overview : ""}
+      </p>
 
+      <button
+        className="movie-card-button"
+        type="button"
+        onClick={mostrarOcultarDescripcion}
+      >
+        Ver descripcion
+      </button>
+
+      <Link className="movie-card-link" to={"/detail/" + props.tipo + "/" + props.id}>
+        Ir a detalle
+      </Link>
+
+      {usuarioLogueado ? (
         <button
-          className="movie-card-button"
+          className="favorito-button"
           type="button"
-          onClick={() => this.mostrarOcultarDescripcion()}
+          onClick={agregarQuitarFavorito}
+          title={esFavorito ? "Quitar de favoritos" : "Agregar a favoritos"}
         >
-          Ver descripcion
+          {esFavorito ? "❤" : "♡"}
         </button>
-
-        <Link
-          className="movie-card-link"
-          to={"/detail/" + this.props.tipo + "/" + this.props.id}
-        >
-          Ir a detalle
-        </Link>
-
-        {this.state.usuarioLogueado ? (
-          <button
-            className="favorito-button"
-            type="button"
-            onClick={() => this.agregarQuitarFavorito()}
-            title={
-              this.state.esFavorito ? "Quitar de favoritos" : "Agregar a favoritos"
-            }
-          >
-            {this.state.esFavorito ? "❤" : "♡"}
-          </button>
-        ) : null}
-      </article>
-    );
-  }
+      ) : null}
+    </article>
+  );
 }
 
 export default MovieCard;
