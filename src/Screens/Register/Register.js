@@ -8,7 +8,7 @@ function Register () {
   const [error, seterror] = useSatate ([""])
  
 
-  enviarFormulario(event) {
+  function enviarFormulario(event) {
     event.preventDefault();
 
     const email = setemail.toLowerCase();
@@ -63,7 +63,7 @@ function Register () {
   
   }
 
-  render() {
+  
     return (
       <div className="register-container">
         
@@ -92,6 +92,6 @@ function Register () {
       </div>
     );
   }
-}
+
 
 export default Register;
