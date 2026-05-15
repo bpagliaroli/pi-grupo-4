@@ -1,22 +1,18 @@
-import { Component } from "react";
+import { useState} from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./Register.css";
 
-class Register extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",    
-      password: "",
-      error: ""
-    };
-  }
+function Register () {
+  const [email, setemail] = useState ([""])
+  const [password, setpassword] = useState ([""])
+  const [error, seterror] = useSatate ([""])
+ 
 
   enviarFormulario(event) {
     event.preventDefault();
 
-    const email = this.state.email.toLowerCase();
-    const password = this.state.password;
+    const email = setemail.toLowerCase();
+    const password = setpassword;
     let usuarios = localStorage.getItem("usuarios");
 
     if (usuarios) {
@@ -26,14 +22,14 @@ class Register extends Component {
     }
 
     if (password.length < 6) {
-      return this.setState({
+      return seterror ({
         error: "La contraseña debe tener mínimo 6 caracteres"
       });
     }
 
     for (let i = 0; i < usuarios.length; i++) {
       if (usuarios[i].email.toLowerCase() === email) {
-        return this.setState({
+        return seterror ({
           error: "El email ya está registrado"
         });
       }
@@ -57,18 +53,17 @@ class Register extends Component {
     this.props.history.push("/login");
   }
 
-  controlarEmail(event) {
-    this.setState({
-      email: event.target.value,
-      error: ""
-    });
+  function controlarEmail(event) {
+    setemail (event.target.value) ;
+    seterror ([""])
+    
   }
 
-  controlarPassword(event) {
-    this.setState({
-      password: event.target.value,
-      error: ""
-    });
+  function controlarPassword(event) { 
+    setpassword (event.target.value)
+    seterror ([""])
+  
+  
   }
 
   render() {
@@ -76,7 +71,7 @@ class Register extends Component {
       <div className="register-container">
         
         <Navbar />
-        <form className="register-form" onSubmit={(event) => this.enviarFormulario(event)}>
+        <form className="register-form" onSubmit={(event) => enviarFormulario(event)}>
           <h2>Crear cuenta</h2>
 
           <input
