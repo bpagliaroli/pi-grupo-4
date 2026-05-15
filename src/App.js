@@ -10,25 +10,28 @@ import Register from "./Screens/Register/Register";
 import Login from "./Screens/Login/Login";
 import Results from "./Screens/Results/Results";
 import NotFound from "./Screens/NotFound/NotFound";
-import "./App.css";
 import Favoritos from "./Screens/Favoritos/Favoritos";
+
 
 function App() {
   return (
     <div className="container">
       <h1>UdeSA Movies</h1>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/movies" component={Movies} />
-        <Route path="/detail/:id" component={Detail} />
-        <Route path="/series" component={Series} />
-        <Route path="/register" component={Register} />
-        <Route path="/login" component={Login} />
-        <Route path="/results/:busqueda/:tipo" component={Results} />
-        <Route path="/results/:busqueda" component={Results} />
-        <Route path="/favoritos" component={Favoritos} />
-        <Route component={NotFound} />
-      </Switch>
+      <Navbar />
+      <div className="contenido-principal">
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/movies" component={Movies} />
+          <Route path="/detail/:tipo/:id" component={Detail} />
+          <Route path="/series" component={Series} />
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
+          <Route path="/results/:busqueda/:tipo" component={Results} />
+          <Route path="/results/:busqueda" component={Results} />
+          <Route path="/favoritos" component={Favoritos} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
       <Footer />
     </div>
   );

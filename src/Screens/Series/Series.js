@@ -138,6 +138,7 @@ class Series extends Component {
               <MovieList
                 className="series-grid"
                 peliculas={this.state.peliculasFiltradas}
+                tipo="cartelera"
               />
             ) : (
               <p className="series-empty">No se encontraron peliculas.</p>

@@ -2,11 +2,11 @@
   padding: 24px;
 }
 
-.results-title {
+.resultsTitu {
   margin-bottom: 24px;
 }
 
-.results-grid {
+.resultsVer {
   display: flex;
   flex-wrap: wrap;
 }

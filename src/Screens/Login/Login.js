@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
 import Navbar from "../../components/Navbar/Navbar";
+import './Login.css';
 
 const cookies = new Cookies();
 
@@ -31,7 +32,7 @@ class Login extends Component {
   enviarFormulario(e) {
     e.preventDefault();
 
-    // Convertir email a minúsculas para comparación
+    
     const email = this.state.email.toLowerCase();
     const password = this.state.password;
 
@@ -57,8 +58,7 @@ class Login extends Component {
       usuarioEncontrado &&
       usuarioEncontrado.password === password
     ) {
-      localStorage.setItem(
-        "usuarioLogueado",
+      localStorage.setItem("usuarioLogueado",
         JSON.stringify(usuarioEncontrado)
       );
 
@@ -66,7 +66,6 @@ class Login extends Component {
         path: "/"
       });
 
-      // Limpiar formulario después de login exitoso
       this.setState({
         email: "",
         password: "",
@@ -74,7 +73,8 @@ class Login extends Component {
       });
 
       this.props.history.push("/");
-    } else {
+    } 
+    else {
       this.setState({
         error: "Datos incorrectos"
       });
@@ -83,30 +83,25 @@ class Login extends Component {
 
   render() {
     return (
-      <main>
-        <Navbar />
-        <form onSubmit={(e) => this.enviarFormulario(e)}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={this.state.email}
-          onChange={(e) => this.controlarEmail(e)}
-        />
+        
+        <div className="login-container">
+          <Navbar />
+        <form className="login-form" onSubmit={(e) => this.enviarFormulario(e)}>
+          <h2>Ingresar</h2>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={this.state.password}
-          onChange={(e) => this.controlarPassword(e)}
-        />
+          <input type="email" placeholder="Email" value={this.state.email} onChange={(e) => this.controlarEmail(e)}
+          />
 
-        <button type="submit">Ingresar</button>
+          <input 
+            type="password" placeholder="Password" value={this.state.password} onChange={(e) => this.controlarPassword(e)}
+          />
 
-        {this.state.error !== "" && <p>{this.state.error}</p>}
-      </form>
-      </main>
+          <button type="submit">Ingresar</button>
+
+          <p>{this.state.error !== "" ? this.state.error : ""}</p>
+        </form>
+      </div>
     );
   }
 }
-
-export default Login;
+export default Login ;

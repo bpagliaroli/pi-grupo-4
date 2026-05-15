@@ -13,23 +13,33 @@ class Results extends Component {
   }
 
   componentDidMount() {
-    // Cuando entra por primera vez a la pantalla, busca las peliculas
     this.buscarPeliculas();
   }
 
   componentDidUpdate(prevProps) {
-    // Si cambia lo escrito en la URL, vuelve a hacer la busqueda
+    let cambioBusqueda = false;
+    let cambioTipo = false;
+
     if (prevProps.match.params.busqueda !== this.props.match.params.busqueda) {
+      cambioBusqueda = true;
+    }
+
+    if (prevProps.match.params.tipo !== this.props.match.params.tipo) {
+      cambioTipo = true;
+    }
+
+    if (cambioBusqueda === true) {
+      this.buscarPeliculas();
+    } else if (cambioTipo === true) {
       this.buscarPeliculas();
     }
   }
 
   buscarPeliculas() {
-    // React Router guarda la palabra buscada y el tipo
     let query = this.props.match.params.busqueda;
     let tipo = this.props.match.params.tipo;
+    let url = "";
 
-    // Si no hay tipo, usar populares por defecto
     if (!tipo) {
       tipo = "populares";
     }
@@ -47,14 +57,30 @@ class Results extends Component {
       loading: true
     });
 
-    // Buscar películas o series según el tipo elegido
-    fetch(
-      "https://api.themoviedb.org/3/search/movie?api_key=e1f309add4d1c8549507f20f59ad035e&query=" + query
-    )
+    if (tipo === "cartelera") {
+      url = "https://api.themoviedb.org/3/movie/now_playing?api_key=e1f309add4d1c8549507f20f59ad035e";
+    } else {
+      url = "https://api.themoviedb.org/3/movie/popular?api_key=e1f309add4d1c8549507f20f59ad035e";
+    }
+
+    fetch(url)
       .then((response) => response.json())
       .then((data) => {
+        let resultados = [];
+
+        if (data.results) {
+          for (let i = 0; i < data.results.length; i++) {
+            if (
+              data.results[i].title &&
+              data.results[i].title.toLowerCase().includes(query.toLowerCase())
+            ) {
+              resultados.push(data.results[i]);
+            }
+          }
+        }
+
         this.setState({
-          resultados: data.results ? data.results : [],
+          resultados: resultados,
           loading: false
         });
       })
@@ -69,7 +95,7 @@ class Results extends Component {
       return (
         <main className="results">
           <Navbar />
-          <h2 className="results-title">Resultados de busqueda</h2>
+          <h2 className="resultsTitu">Resultados de busqueda</h2>
           <p>Cargando...</p>
         </main>
       );
@@ -79,7 +105,7 @@ class Results extends Component {
       return (
         <main className="results">
           <Navbar />
-          <h2 className="results-title">Resultados de busqueda</h2>
+          <h2 className="resultsTitu">Resultados de busqueda</h2>
           <p>No se encontraron peliculas para esa busqueda.</p>
         </main>
       );
@@ -88,8 +114,12 @@ class Results extends Component {
     return (
       <main className="results">
         <Navbar />
-        <h2 className="results-title">Resultados de busqueda</h2>
-        <MovieList className="results-grid" peliculas={this.state.resultados} />
+        <h2 className="resultsTitu">Resultados de busqueda</h2>
+        <MovieList
+          className="resultsVer"
+          peliculas={this.state.resultados}
+          tipo={this.props.match.params.tipo ? this.props.match.params.tipo : "populares"}
+        />
       </main>
     );
   }

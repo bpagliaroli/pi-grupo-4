@@ -4,6 +4,7 @@
 
 .detail-title {
   margin-bottom: 24px;
+  color: #222;
 }
 
 .detail-content {
@@ -14,12 +15,21 @@
 
 .detail-image {
   width: 280px;
-  border-radius: 8px;
 }
 
 .detail-info {
   max-width: 600px;
   line-height: 1.6;
+}
+
+.detail-favorite-button {
+  margin-top: 12px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.detail-favorite-button.is-favorite {
+  font-weight: bold;
 }
 
 @media (max-width: 768px) {

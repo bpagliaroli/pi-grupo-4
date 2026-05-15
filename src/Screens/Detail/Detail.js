@@ -1,13 +1,17 @@
 import React, { Component } from "react";
+import Cookies from "universal-cookie";
 import Navbar from "../../components/Navbar/Navbar";
 import "./Detail.css";
+
+const cookies = new Cookies();
 
 class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       pelicula: null,
-      loading: true
+      loading: true,
+      esFavorito: false
     };
   }
   
@@ -16,9 +20,30 @@ class Detail extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.match.params.id !== this.props.match.params.id) {
+    if (
+      prevProps.match.params.id !== this.props.match.params.id ||
+      prevProps.match.params.tipo !== this.props.match.params.tipo
+    ) {
       this.traerDetalle();
     }
+  }
+
+  obtenerTipoActual() {
+    let tipo = this.props.match.params.tipo;
+
+    if (!tipo) {
+      tipo = "populares";
+    }
+
+    return tipo;
+  }
+
+  obtenerTextoTipo() {
+    if (this.obtenerTipoActual() === "cartelera") {
+      return "Película en cartelera";
+    }
+
+    return "Película popular";
   }
 
   traerDetalle() {
@@ -36,30 +61,77 @@ class Detail extends Component {
         this.setState({
           pelicula: data,
           loading: false
-        });
+        }, () => this.verificarFavorito());
       })
       .catch((error) => {
         console.log(error);
         this.setState({ loading: false });
       });
   }
-    agregarFavorito() {
-        let storage = localStorage.getItem('favoritos');
-        let favs = storage ? JSON.parse(storage) : [];
-        
-        // Guardar la película COMPLETA, no solo el ID
-        const peliculaFavorita = {
-            id: this.state.pelicula.id,
-            title: this.state.pelicula.title,
-            poster_path: this.state.pelicula.poster_path,
-            overview: this.state.pelicula.overview
-        };
-        
-        favs.push(peliculaFavorita);
-        localStorage.setItem('favoritos', JSON.stringify(favs));
-        alert("Película agregada a favoritos");
+
+  verificarFavorito() {
+    if (!this.state.pelicula) {
+      return;
     }
+
+    let storage = localStorage.getItem("favoritos");
+    let favoritos = storage ? JSON.parse(storage) : [];
+    let existe = false;
+
+    for (let i = 0; i < favoritos.length; i++) {
+      if (
+        favoritos[i].id === this.state.pelicula.id &&
+        favoritos[i].tipo === this.obtenerTipoActual()
+      ) {
+        existe = true;
+      }
+    }
+
+    this.setState({
+      esFavorito: existe
+    });
+  }
+
+  agregarQuitarFavorito() {
+    if (!cookies.get("user-auth-cookie")) {
+      return;
+    }
+
+    let storage = localStorage.getItem("favoritos");
+    let favoritos = storage ? JSON.parse(storage) : [];
+
+    if (this.state.esFavorito) {
+      let nuevosFavoritos = [];
+
+      for (let i = 0; i < favoritos.length; i++) {
+        if (
+          favoritos[i].id !== this.state.pelicula.id ||
+          favoritos[i].tipo !== this.obtenerTipoActual()
+        ) {
+          nuevosFavoritos.push(favoritos[i]);
+        }
+      }
+
+      localStorage.setItem("favoritos", JSON.stringify(nuevosFavoritos));
+      this.setState({ esFavorito: false });
+    } else {
+      const peliculaFavorita = {
+        id: this.state.pelicula.id,
+        title: this.state.pelicula.title,
+        poster_path: this.state.pelicula.poster_path,
+        overview: this.state.pelicula.overview,
+        tipo: this.obtenerTipoActual()
+      };
+
+      favoritos.push(peliculaFavorita);
+      localStorage.setItem("favoritos", JSON.stringify(favoritos));
+      this.setState({ esFavorito: true });
+    }
+  }
+
   render() {
+    const usuarioLogueado = cookies.get("user-auth-cookie");
+
     if (this.state.loading) {
       return (
         <main className="detail">
@@ -87,10 +159,68 @@ class Detail extends Component {
       );
     }
 
+    if (usuarioLogueado) {
+      return (
+        <main className="detail">
+          <h2 className="detail-title">{this.state.pelicula.title}</h2>
+          <p>{this.obtenerTextoTipo()}</p>
+
+          <div className="detail-content">
+            {this.state.pelicula.poster_path ? (
+              <img
+                className="detail-image"
+                src={"https://image.tmdb.org/t/p/w342" + this.state.pelicula.poster_path}
+                alt={this.state.pelicula.title}
+              />
+            ) : (
+              <p>Imagen no disponible</p>
+            )}
+
+            <div className="detail-info">
+              <p>Fecha de estreno: {this.state.pelicula.release_date}</p>
+              <p>Calificacion: {this.state.pelicula.vote_average}</p>
+              <p>Duracion: {this.state.pelicula.runtime} minutos</p>
+              <p><strong>Géneros:</strong></p>
+              {this.state.pelicula.genres ? (
+                <ul>
+                  {this.state.pelicula.genres.map((genero) => (
+                    <li key={genero.id}>{genero.name}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>Cargando...</p>
+              )}
+              <p><strong>Sinopsis:</strong> {this.state.pelicula.overview}</p>
+              {usuarioLogueado ? (
+                this.state.esFavorito ? (
+                  <button
+                    className="detail-favorite-button is-favorite"
+                    type="button"
+                    onClick={() => this.agregarQuitarFavorito()}
+                  >
+                    Quitar de favoritos
+                  </button>
+                ) : (
+                  <button
+                    className="detail-favorite-button"
+                    type="button"
+                    onClick={() => this.agregarQuitarFavorito()}
+                  >
+                    Agregar a favoritos
+                  </button>
+                )
+              ) : null}
+            </div>
+          </div>
+        </main>
+      );
+    }
+
     return (
       <main className="detail">
         <Navbar />
         <h2 className="detail-title">{this.state.pelicula.title}</h2>
+        <p>{this.obtenerTextoTipo()}</p>
 
         <div className="detail-content">
           {this.state.pelicula.poster_path ? (
@@ -99,28 +229,29 @@ class Detail extends Component {
               src={"https://image.tmdb.org/t/p/w342" + this.state.pelicula.poster_path}
               alt={this.state.pelicula.title}
             />
+        ) : (
+          <p>Imagen no disponible</p>
+        )}
+
+        <div className="detail-info">
+          <p>Fecha de estreno: {this.state.pelicula.release_date}</p>
+          <p>Calificacion: {this.state.pelicula.vote_average}</p>
+          <p>Duracion: {this.state.pelicula.runtime} minutos</p>
+          <p><strong>Géneros:</strong></p>
+          {this.state.pelicula.genres ? (
+            <ul>
+              {this.state.pelicula.genres.map((genero) => (
+                <li key={genero.id}>{genero.name}</li>
+              ))}
+            </ul>
           ) : (
-            <p>Imagen no disponible</p>
+            <p>Cargando...</p>
           )}
-
-          <div className="detail-info">
-            <p>{this.state.pelicula.overview}</p>
-            <p>Fecha de estreno: {this.state.pelicula.release_date}</p>
-            <p>Calificacion: {this.state.pelicula.vote_average}</p>
-            <p>Duracion: {this.state.pelicula.runtime} minutos</p>
-            <p><strong>Géneros:</strong> {this.state.pelicula.genres ? this.state.pelicula.genres.map(g => g.name).join(", ") : 'Cargando...'}</p>
-            <p><strong>Sinopsis:</strong> {this.state.pelicula.overview}</p>
-            {localStorage.getItem("usuarioLogueado") ? (
-              <button onClick={() => this.agregarFavorito()}>
-                Agregar a favoritos
-              </button>
-            ) : null}
-
-          </div>
-          
-      </div> 
+          <p><strong>Sinopsis:</strong> {this.state.pelicula.overview}</p>
+        </div>
+      </div>
       </main>
-          );
+    );
   }
 }
 
