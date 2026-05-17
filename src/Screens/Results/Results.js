@@ -1,17 +1,14 @@
-import React, { Component } from "react";
+import React, {useState } from "react";
 import MovieList from "../../components/MovieList/MovieList";
 import Navbar from "../../components/Navbar/Navbar";
 import "./Results.css";
 
-class Results extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      resultados: [],
-      loading: true
-    };
-  }
+function Results  () {
+  const [resultados, setResultados]= useState ([])
+  const [loading, setLoading]= useState (true)
 
+}
+  
   componentDidMount() {
     this.buscarPeliculas();
   }
